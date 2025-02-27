@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organogram</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .org-chart {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .level {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            margin: 10px 0;
+        }
+
+        .node {
+            margin: 10px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            text-align: center;
+            width: 200px;
+        }
+
+        .line {
+            height: 20px;
+            border-left: 2px solid #007bff;
+            margin-top: 10px;
+        }
+
+        .line-horizontal {
+            width: 20px;
+            border-top: 2px solid #007bff;
+            margin-top: -1px;
+        }
+
+        .name {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .position {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="org-chart">
+        <!-- Top level: Board Chairperson -->
+        <div class="level">
+            <div class="node">
+                <div class="position">Chairperson</div>
+                <div class="name">John Doe</div>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <!-- Second level: Vice Chairperson and Treasurer -->
+        <div class="level">
+            <div class="node">
+                <div class="position">Vice Chairperson</div>
+                <div class="name">Jane Smith</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">Treasurer</div>
+                <div class="name">Michael Brown</div>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <!-- Third level: Presidents (Districts) under Vice Chairperson -->
+        <div class="level">
+            <div class="node">
+                <div class="position">District 1 President</div>
+                <div class="name">Emma White</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 2 President</div>
+                <div class="name">Oliver Green</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 3 President</div>
+                <div class="name">Sophia Black</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 4 President</div>
+                <div class="name">Liam Blue</div>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <!-- Fourth level: Presidents (Districts) under Vice Chairperson -->
+        <div class="level">
+            <div class="node">
+                <div class="position">District 5 President</div>
+                <div class="name">Ava Gray</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 6 President</div>
+                <div class="name">Ethan Red</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 7 President</div>
+                <div class="name">Mia Yellow</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">District 8 President</div>
+                <div class="name">James Orange</div>
+            </div>
+        </div>
+        <div class="line"></div>
+        
+        <!-- Fifth level: Administrative Assistant and Support Staff under Treasurer -->
+        <div class="level">
+            <div class="node">
+                <div class="position">Administrative Assistant</div>
+                <div class="name">Olivia White</div>
+            </div>
+            <div class="line-horizontal"></div>
+            <div class="node">
+                <div class="position">Support Staff</div>
+                <div class="name">Lucas Black</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
