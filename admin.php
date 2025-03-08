@@ -30,6 +30,11 @@ $sql_events = "SELECT COUNT(*) AS total_events FROM events";
 $result_events = $conn->query($sql_events);
 $row_events = $result_events->fetch_assoc();
 $total_events = $row_events['total_events'] ?? 0; // Default to 0 if table doesn't exist yet
+
+
+// fetching existing events for display on the UI
+$fetch = "SELECT * FROM events ORDER BY event_date DESC";
+$fetched_events = $conn->query($fetch);
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +61,7 @@ $total_events = $row_events['total_events'] ?? 0; // Default to 0 if table doesn
 
 
 </head>
+
 <body>
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid position-relative d-flex align-items-center">
@@ -362,161 +368,155 @@ $total_events = $row_events['total_events'] ?? 0; // Default to 0 if table doesn
               <a href="events.php" class="btn btn-sm btn-outline-success">Manage Events</a>
             </div>
           </div>
+
           <div class="card-body">
             <div class="row">
-              <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <span class="badge bg-primary">Upcoming</span>
-                      <small class="text-muted">March 15, 2025</small>
-                    </div>
-                    <h5 class="card-title">Regional Business Forum</h5>
-                    <p class="card-text text-muted mb-3">Connecting businesses across the Lango Region for growth and partnerships.</p>
-                    <div class="d-flex align-items-center text-muted mb-3">
-                      <i class="bi bi-geo-alt me-2"></i>
-                      <span>Lira Hotel Conference Center</span>
-                    </div>
-                    <div class="d-flex align-items-center text-muted">
-                      <i class="bi bi-clock me-2"></i>
-                      <span>9:00 AM - 4:00 PM</span>
-                    </div>
-                  </div>
-                  <div class="card-footer bg-light d-flex justify-content-between align-items-center">
-                    <span class="text-muted"><i class="bi bi-people me-1"></i> 120 Registered</span>
-                    <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
-                  </div>
-                </div>
-              </div>
+              <?php if ($fetched_events && $fetched_events->num_rows > 0): ?>
+                <?php while ($row = $fetched_events->fetch_assoc()) : ?>
+                  <?php
+                  // Format date for display
+                  $event_date = new DateTime($row['event_date']);
+                  $day = $event_date->format('d');
+                  $month = $event_date->format('M');
+                  $year = $event_date->format('Y');
 
-              <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <span class="badge bg-success">Featured</span>
-                      <small class="text-muted">April 5, 2025</small>
-                    </div
+                  // Determine status
+                  $today = new DateTime();
+                  $is_past = $event_date < $today;
+                  $status_class = $is_past ? 'bg-secondary' : 'bg-success';
+                  $status_text = $is_past ? 'Past' : 'Upcoming';
+                  $status_icon = $is_past ? 'bi-calendar-x' : 'bi-calendar-check';
+                  ?>
+                  <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                      <div class="card-body">
+                        <div class="event-image">
+                        <img src="uploads/events/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['title']); ?>">
+                        <div class="event-date-badge">
+                            <span class="day"><?php echo $day; ?></span>
+                            <span class="month"><?php echo $month;  ?><?php echo $year;?> </span>
+
+                          </div>
+                        </div>
+                
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <span class="badge bg-primary event-type"><?php echo ucfirst($row['event_type']); ?></span>
+                      
+                        </div>
+                        <h5 class="card-title"><?php echo htmlspecialchars($row['title']); ?></h5>
+                        <p class="card-text text-muted mb-3"><?php echo nl2br(htmlspecialchars($row['description'])); ?></p>
+                        <div class="d-flex align-items-center text-muted mb-3">
+                          <i class="bi bi-geo-alt me-2"></i>
+                          <span><?php echo htmlspecialchars($row['location']); ?></span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted">
+                          <i class="bi bi-clock me-2"></i>
+                          <span><?php echo $row['event_time'] ?></span>
+                        </div>
+                        
                       </div>
-                    <h5 class="card-title">Agricultural Trade Fair</h5>
-                    <p class="card-text text-muted mb-3">Showcasing agricultural innovations and connecting farmers with markets.</p>
-                    <div class="d-flex align-items-center text-muted mb-3">
-                      <i class="bi bi-geo-alt me-2"></i>
-                      <span>Lango Regional Grounds</span>
-                    </div>
-                    <div class="d-flex align-items-center text-muted">
-                      <i class="bi bi-clock me-2"></i>
-                      <span>10:00 AM - 5:00 PM</span>
+                      <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+                     
+                                    <span class="status-chip <?php echo $status_class; ?> text-white">
+                                        <i class="bi <?php echo $status_icon; ?>"></i> <?php echo $status_text; ?>
+                                    </span>
+                                    <div class="btn-group">
+                                        <a href="event-details.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="edit-event.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="events.php?delete_event=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this event?');">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                
+                      </div>
                     </div>
                   </div>
-                  <div class="card-footer bg-light d-flex justify-content-between align-items-center">
-                    <span class="text-muted"><i class="bi bi-people me-1"></i> 85 Registered</span>
-                    <a href="#" class="btn btn-sm btn-outline-success">Details</a>
-                  </div>
-                </div>
+                <?php endwhile ?>
+              <?php endif ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- System Status -->
+  <!-- <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+        <div class="card-header bg-white pt-4 pb-3 border-0">
+          <h5 class="card-title mb-0"><i class="bi bi-speedometer2 me-2 text-danger"></i>System Status</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-4 mb-md-0">
+              <h6 class="mb-3">Server Performance</h6>
+              <div class="progress mb-3" style="height: 8px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 87%;" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted small">CPU Usage: 13%</span>
+                <span class="text-success small">Excellent</span>
               </div>
 
-              <div class="col-md-4 mb-3">
-                <div class="card h-100 border-0 shadow-sm">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <span class="badge bg-warning text-dark">Workshop</span>
-                      <small class="text-muted">April 22, 2025</small>
-                    </div>
-                    <h5 class="card-title">Digital Skills Workshop</h5>
-                    <p class="card-text text-muted mb-3">Equipping young entrepreneurs with essential digital marketing skills.</p>
-                    <div class="d-flex align-items-center text-muted mb-3">
-                      <i class="bi bi-geo-alt me-2"></i>
-                      <span>Lira University ICT Center</span>
-                    </div>
-                    <div class="d-flex align-items-center text-muted">
-                      <i class="bi bi-clock me-2"></i>
-                      <span>1:00 PM - 5:00 PM</span>
-                    </div>
-                  </div>
-                  <div class="card-footer bg-light d-flex justify-content-between align-items-center">
-                    <span class="text-muted"><i class="bi bi-people me-1"></i> 50 Registered</span>
-                    <a href="#" class="btn btn-sm btn-outline-warning">Details</a>
-                  </div>
-                </div>
+              <h6 class="mt-4 mb-3">Database Status</h6>
+              <div class="progress mb-3" style="height: 8px;">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted small">Storage Usage: 65%</span>
+                <span class="text-primary small">Good</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h6 class="mb-3">Recent Activity</h6>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>User</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="badge bg-info text-white">Login</span></td>
+                      <td>admin@langoregion.com</td>
+                      <td>Just now</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-success text-white">Update</span></td>
+                      <td>content@langoregion.com</td>
+                      <td>3 hours ago</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge bg-warning text-dark">Edit</span></td>
+                      <td>events@langoregion.com</td>
+                      <td>Yesterday</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div> -->
 
-    <!-- System Status -->
-    <div class="row">
-      <div class="col-12">
-        <div class="card border-0 shadow-sm" style="border-radius: 15px;">
-          <div class="card-header bg-white pt-4 pb-3 border-0">
-            <h5 class="card-title mb-0"><i class="bi bi-speedometer2 me-2 text-danger"></i>System Status</h5>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6 mb-4 mb-md-0">
-                <h6 class="mb-3">Server Performance</h6>
-                <div class="progress mb-3" style="height: 8px;">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 87%;" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="text-muted small">CPU Usage: 13%</span>
-                  <span class="text-success small">Excellent</span>
-                </div>
-
-                <h6 class="mt-4 mb-3">Database Status</h6>
-                <div class="progress mb-3" style="height: 8px;">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="text-muted small">Storage Usage: 65%</span>
-                  <span class="text-primary small">Good</span>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <h6 class="mb-3">Recent Activity</h6>
-                <div class="table-responsive">
-                  <table class="table table-sm">
-                    <thead>
-                      <tr>
-                        <th>Action</th>
-                        <th>User</th>
-                        <th>Time</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><span class="badge bg-info text-white">Login</span></td>
-                        <td>admin@langoregion.com</td>
-                        <td>Just now</td>
-                      </tr>
-                      <tr>
-                        <td><span class="badge bg-success text-white">Update</span></td>
-                        <td>content@langoregion.com</td>
-                        <td>3 hours ago</td>
-                      </tr>
-                      <tr>
-                        <td><span class="badge bg-warning text-dark">Edit</span></td>
-                        <td>events@langoregion.com</td>
-                        <td>Yesterday</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Footer -->
+  <footer class="mt-5 p-4 text-center">
+    <div class="text-muted">
+      &copy; <?php echo date('Y'); ?> Lango Region Administration. All rights reserved.
     </div>
-
-    <!-- Footer -->
-    <footer class="mt-5 p-4 text-center">
-      <div class="text-muted">
-        &copy; <?php echo date('Y'); ?> Lango Region Administration. All rights reserved.
-      </div>
-    </footer>
+  </footer>
   </div>
 
   <!-- Quick Access Menu -->
@@ -588,8 +588,146 @@ $total_events = $row_events['total_events'] ?? 0; // Default to 0 if table doesn
   <!-- Bootstrap JavaScript Libraries -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="main.js"></script>
+  <script>
+            // Initialize datepicker
+            flatpickr(".datepicker", {
+                dateFormat: "Y-m-d",
+                minDate: "today"
+            });
+
+            // Initialize timepicker
+            flatpickr(".timepicker", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i"
+            });
+
+            // Image upload preview
+            document.getElementById('event_image').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview').classList.remove('d-none');
+                        document.getElementById('imagePreview').querySelector('img').src = e.target.result;
+                        document.getElementById('imageUploadContainer').classList.add('d-none');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Remove image
+            document.getElementById('removeImage').addEventListener('click', function() {
+                document.getElementById('event_image').value = '';
+                document.getElementById('imagePreview').classList.add('d-none');
+                document.getElementById('imageUploadContainer').classList.remove('d-none');
+            });
+
+            // Event preview live update
+            const eventForm = document.getElementById('eventForm');
+
+            // Update preview as user types
+            eventForm.addEventListener('input', updatePreview);
+
+            function updatePreview() {
+                // Get form values
+                const title = document.getElementById('event_title').value || 'Event Title';
+                const date = document.getElementById('event_date').value;
+                const time = document.getElementById('event_time').value;
+                const location = document.getElementById('event_location').value || 'Location';
+                const capacity = document.getElementById('event_capacity').value || '0';
+                const description = document.getElementById('event_description').value || 'Description will appear here';
+                const typeSelect = document.getElementById('event_type');
+                const type = typeSelect.options[typeSelect.selectedIndex].text;
+
+                // Format date and time
+                let dateTimeText = 'Date & Time';
+                if (date) {
+                    const dateObj = new Date(date);
+                    const formatter = new Intl.DateTimeFormat('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    dateTimeText = formatter.format(dateObj);
+                    if (time) {
+                        dateTimeText += ' at ' + time;
+                    }
+                }
+
+                // Update preview elements
+                document.querySelector('.event-preview-title').textContent = title;
+                document.querySelector('.event-preview-date').textContent = dateTimeText;
+                document.querySelector('.event-preview-location').textContent = location;
+                document.querySelector('.event-preview-description').textContent = description;
+                document.querySelector('.event-preview-capacity').textContent = capacity;
+
+                // Update type badge
+                const typeBadge = document.querySelector('.event-preview-type');
+                if (type === 'Workshop') {
+                    typeBadge.className = 'badge event-preview-type bg-warning';
+                } else if (type === 'Conference') {
+                    typeBadge.className = 'badge event-preview-type bg-info';
+                } else if (type === 'Seminar') {
+                    typeBadge.className = 'badge event-preview-type bg-primary';
+                } else if (type === 'Meeting') {
+                    typeBadge.className = 'badge event-preview-type bg-success';
+                } else if (type === 'Exhibition') {
+                    typeBadge.className = 'badge event-preview-type bg-secondary';
+                } else {
+                    typeBadge.className = 'badge event-preview-type bg-dark';
+                }
+                typeBadge.textContent = type === 'Select event type' ? 'Type' : type;
+            }
+
+            // Create confetti animation for success message
+            function createConfetti() {
+                const colors = ['#C1053F', '#e3336d', '#9a0433', '#42a5f5', '#4caf50', '#ff9800'];
+                const container = document.body;
+
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                    confetti.style.opacity = Math.random() * 0.5 + 0.5;
+                    container.appendChild(confetti);
+
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }
+            }
+
+            // Counter animation
+            document.addEventListener('DOMContentLoaded', function() {
+                const counters = document.querySelectorAll('.counter-animation');
+
+                counters.forEach(counter => {
+                    const target = parseInt(counter.innerText);
+                    let count = 0;
+                    const duration = 2000; // ms
+                    const increment = Math.ceil(target / (duration / 30)); // Update every 30ms
+
+                    const timer = setInterval(() => {
+                        count += increment;
+                        if (count >= target) {
+                            counter.innerText = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.innerText = count;
+                        }
+                    }, 30);
+                });
+            });
+        </script>
 
   <!-- Custom Script -->
 
 </body>
+
 </html>

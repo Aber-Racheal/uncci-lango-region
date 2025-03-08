@@ -382,280 +382,281 @@ $unread_count = $row_unread['unread_count'];
                 </div>
             <?php endif; ?>
         </div>
+    </div>
 
-        <!-- Add Event Modal -->
-        <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="addEventModalLabel">Create New Event</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" action="events.php" enctype="multipart/form-data" id="eventForm">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group mb-3">
-                                        <label for="event_title" class="form-label">Event Title *</label>
-                                        <input type="text" class="form-control" id="event_title" name="event_title" required>
-                                    </div>
+    <!-- Add Event Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addEventModalLabel">Create New Event</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="events.php" enctype="multipart/form-data" id="eventForm">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group mb-3">
+                                    <label for="event_title" class="form-label">Event Title *</label>
+                                    <input type="text" class="form-control" id="event_title" name="event_title" required>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label for="event_date" class="form-label">Event Date *</label>
-                                                <input type="date" class="form-control datepicker" id="event_date" name="event_date" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label for="event_time" class="form-label">Event Time</label>
-                                                <input type="time" class="form-control timepicker" id="event_time" name="event_time">
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="event_date" class="form-label">Event Date *</label>
+                                            <input type="date" class="form-control datepicker" id="event_date" name="event_date" required>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label for="event_location" class="form-label">Location *</label>
-                                                <input type="text" class="form-control" id="event_location" name="event_location" required>
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="event_time" class="form-label">Event Time</label>
+                                            <input type="time" class="form-control timepicker" id="event_time" name="event_time">
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label for="event_capacity" class="form-label">Capacity</label>
-                                                <input type="number" class="form-control" id="event_capacity" name="event_capacity" min="0">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group mb-3">
-                                        <label for="event_type" class="form-label">Event Type *</label>
-                                        <select class="form-select" id="event_type" name="event_type" required>
-                                            <option value="">Select event type</option>
-                                            <option value="workshop">Workshop</option>
-                                            <option value="conference">Conference</option>
-                                            <option value="seminar">Seminar</option>
-                                            <option value="meeting">Meeting</option>
-                                            <option value="exhibition">Exhibition</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mb-3">
-                                        <label for="event_description" class="form-label">Description *</label>
-                                        <textarea class="form-control" id="event_description" name="event_description" rows="6" required></textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">Event Image</label>
-                                        <div class="file-upload-container" id="imageUploadContainer">
-                                            <input type="file" class="form-control" id="event_image" name="event_image" accept="image/jpeg, image/jpg, image/png">
-                                            <div class="file-upload-icon">
-                                                <i class="bi bi-cloud-arrow-up"></i>
-                                            </div>
-                                            <p class="file-upload-text">
-                                                Drag & drop or click to upload
-                                                <small class="d-block text-muted mt-1">JPG, JPEG or PNG, max 5MB</small>
-                                            </p>
-                                        </div>
-                                        <div id="imagePreview" class="mt-3 d-none">
-                                            <img src="" alt="Image Preview" class="img-fluid rounded">
-                                            <button type="button" class="btn btn-sm btn-danger mt-2" id="removeImage">
-                                                <i class="bi bi-trash me-1"></i>Remove Image
-                                            </button>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="event_location" class="form-label">Location *</label>
+                                            <input type="text" class="form-control" id="event_location" name="event_location" required>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="event_capacity" class="form-label">Capacity</label>
+                                            <input type="number" class="form-control" id="event_capacity" name="event_capacity" min="0">
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div class="event-preview mt-4">
-                                        <div class="p-4">
-                                            <h5 class="mb-3">Event Preview</h5>
-                                            <div class="border rounded p-3 bg-white">
-                                                <div class="d-flex align-items-center mb-2">
-                                                    <div class="rounded-circle bg-primary text-white p-2 me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                                        <i class="bi bi-calendar-event"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 event-preview-title">Event Title</h6>
-                                                        <small class="text-muted event-preview-date">Date & Time</small>
-                                                    </div>
+                                <div class="form-group mb-3">
+                                    <label for="event_type" class="form-label">Event Type *</label>
+                                    <select class="form-select" id="event_type" name="event_type" required>
+                                        <option value="">Select event type</option>
+                                        <option value="workshop">Workshop</option>
+                                        <option value="conference">Conference</option>
+                                        <option value="seminar">Seminar</option>
+                                        <option value="meeting">Meeting</option>
+                                        <option value="exhibition">Exhibition</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="event_description" class="form-label">Description *</label>
+                                    <textarea class="form-control" id="event_description" name="event_description" rows="6" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Event Image</label>
+                                    <div class="file-upload-container" id="imageUploadContainer">
+                                        <input type="file" class="form-control" id="event_image" name="event_image" accept="image/jpeg, image/jpg, image/png">
+                                        <div class="file-upload-icon">
+                                            <i class="bi bi-cloud-arrow-up"></i>
+                                        </div>
+                                        <p class="file-upload-text">
+                                            Drag & drop or click to upload
+                                            <small class="d-block text-muted mt-1">JPG, JPEG or PNG, max 5MB</small>
+                                        </p>
+                                    </div>
+                                    <div id="imagePreview" class="mt-3 d-none">
+                                        <img src="" alt="Image Preview" class="img-fluid rounded">
+                                        <button type="button" class="btn btn-sm btn-danger mt-2" id="removeImage">
+                                            <i class="bi bi-trash me-1"></i>Remove Image
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="event-preview mt-4">
+                                    <div class="p-4">
+                                        <h5 class="mb-3">Event Preview</h5>
+                                        <div class="border rounded p-3 bg-white">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="rounded-circle bg-primary text-white p-2 me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                    <i class="bi bi-calendar-event"></i>
                                                 </div>
-                                                <div class="small text-muted mb-2">
-                                                    <i class="bi bi-geo-alt me-1"></i> <span class="event-preview-location">Location</span>
-                                                </div>
-                                                <div class="small event-preview-description text-truncate">Description will appear here</div>
-                                                <div class="mt-2">
-                                                    <span class="badge event-preview-type bg-primary">Type</span>
-                                                    <small class="ms-2 text-muted">
-                                                        <i class="bi bi-people"></i> <span class="event-preview-capacity">0</span> capacity
-                                                    </small>
+                                                <div>
+                                                    <h6 class="mb-0 event-preview-title">Event Title</h6>
+                                                    <small class="text-muted event-preview-date">Date & Time</small>
                                                 </div>
                                             </div>
-                                            <div class="custom-tooltip mt-3">
-                                                <i class="bi bi-info-circle text-primary"></i>
-                                                <span class="tooltip-text">This is a live preview of your event. Data updates as you type!</span>
+                                            <div class="small text-muted mb-2">
+                                                <i class="bi bi-geo-alt me-1"></i> <span class="event-preview-location">Location</span>
                                             </div>
+                                            <div class="small event-preview-description text-truncate">Description will appear here</div>
+                                            <div class="mt-2">
+                                                <span class="badge event-preview-type bg-primary">Type</span>
+                                                <small class="ms-2 text-muted">
+                                                    <i class="bi bi-people"></i> <span class="event-preview-capacity">0</span> capacity
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="custom-tooltip mt-3">
+                                            <i class="bi bi-info-circle text-primary"></i>
+                                            <span class="tooltip-text">This is a live preview of your event. Data updates as you type!</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" name="add_event" class="btn btn-primary">
-                                    <i class="bi bi-save me-1"></i>Save Event
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="add_event" class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i>Save Event
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Scripts -->
-        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-        <script>
-            // Initialize datepicker
-            flatpickr(".datepicker", {
-                dateFormat: "Y-m-d",
-                minDate: "today"
-            });
+    <!-- Scripts -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script>
+        // Initialize datepicker
+        flatpickr(".datepicker", {
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
 
-            // Initialize timepicker
-            flatpickr(".timepicker", {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i"
-            });
+        // Initialize timepicker
+        flatpickr(".timepicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i"
+        });
 
-            // Image upload preview
-            document.getElementById('event_image').addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById('imagePreview').classList.remove('d-none');
-                        document.getElementById('imagePreview').querySelector('img').src = e.target.result;
-                        document.getElementById('imageUploadContainer').classList.add('d-none');
-                    }
-                    reader.readAsDataURL(file);
+        // Image upload preview
+        document.getElementById('event_image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').classList.remove('d-none');
+                    document.getElementById('imagePreview').querySelector('img').src = e.target.result;
+                    document.getElementById('imageUploadContainer').classList.add('d-none');
                 }
-            });
-
-            // Remove image
-            document.getElementById('removeImage').addEventListener('click', function() {
-                document.getElementById('event_image').value = '';
-                document.getElementById('imagePreview').classList.add('d-none');
-                document.getElementById('imageUploadContainer').classList.remove('d-none');
-            });
-
-            // Event preview live update
-            const eventForm = document.getElementById('eventForm');
-
-            // Update preview as user types
-            eventForm.addEventListener('input', updatePreview);
-
-            function updatePreview() {
-                // Get form values
-                const title = document.getElementById('event_title').value || 'Event Title';
-                const date = document.getElementById('event_date').value;
-                const time = document.getElementById('event_time').value;
-                const location = document.getElementById('event_location').value || 'Location';
-                const capacity = document.getElementById('event_capacity').value || '0';
-                const description = document.getElementById('event_description').value || 'Description will appear here';
-                const typeSelect = document.getElementById('event_type');
-                const type = typeSelect.options[typeSelect.selectedIndex].text;
-
-                // Format date and time
-                let dateTimeText = 'Date & Time';
-                if (date) {
-                    const dateObj = new Date(date);
-                    const formatter = new Intl.DateTimeFormat('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-                    dateTimeText = formatter.format(dateObj);
-                    if (time) {
-                        dateTimeText += ' at ' + time;
-                    }
-                }
-
-                // Update preview elements
-                document.querySelector('.event-preview-title').textContent = title;
-                document.querySelector('.event-preview-date').textContent = dateTimeText;
-                document.querySelector('.event-preview-location').textContent = location;
-                document.querySelector('.event-preview-description').textContent = description;
-                document.querySelector('.event-preview-capacity').textContent = capacity;
-
-                // Update type badge
-                const typeBadge = document.querySelector('.event-preview-type');
-                if (type === 'Workshop') {
-                    typeBadge.className = 'badge event-preview-type bg-warning';
-                } else if (type === 'Conference') {
-                    typeBadge.className = 'badge event-preview-type bg-info';
-                } else if (type === 'Seminar') {
-                    typeBadge.className = 'badge event-preview-type bg-primary';
-                } else if (type === 'Meeting') {
-                    typeBadge.className = 'badge event-preview-type bg-success';
-                } else if (type === 'Exhibition') {
-                    typeBadge.className = 'badge event-preview-type bg-secondary';
-                } else {
-                    typeBadge.className = 'badge event-preview-type bg-dark';
-                }
-                typeBadge.textContent = type === 'Select event type' ? 'Type' : type;
+                reader.readAsDataURL(file);
             }
+        });
 
-            // Create confetti animation for success message
-            function createConfetti() {
-                const colors = ['#C1053F', '#e3336d', '#9a0433', '#42a5f5', '#4caf50', '#ff9800'];
-                const container = document.body;
+        // Remove image
+        document.getElementById('removeImage').addEventListener('click', function() {
+            document.getElementById('event_image').value = '';
+            document.getElementById('imagePreview').classList.add('d-none');
+            document.getElementById('imageUploadContainer').classList.remove('d-none');
+        });
 
-                for (let i = 0; i < 100; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = Math.random() * 10 + 5 + 'px';
-                    confetti.style.height = Math.random() * 10 + 5 + 'px';
-                    confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-                    confetti.style.opacity = Math.random() * 0.5 + 0.5;
-                    container.appendChild(confetti);
+        // Event preview live update
+        const eventForm = document.getElementById('eventForm');
 
-                    // Remove confetti after animation
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 5000);
-                }
-            }
+        // Update preview as user types
+        eventForm.addEventListener('input', updatePreview);
 
-            // Counter animation
-            document.addEventListener('DOMContentLoaded', function() {
-                const counters = document.querySelectorAll('.counter-animation');
+        function updatePreview() {
+            // Get form values
+            const title = document.getElementById('event_title').value || 'Event Title';
+            const date = document.getElementById('event_date').value;
+            const time = document.getElementById('event_time').value;
+            const location = document.getElementById('event_location').value || 'Location';
+            const capacity = document.getElementById('event_capacity').value || '0';
+            const description = document.getElementById('event_description').value || 'Description will appear here';
+            const typeSelect = document.getElementById('event_type');
+            const type = typeSelect.options[typeSelect.selectedIndex].text;
 
-                counters.forEach(counter => {
-                    const target = parseInt(counter.innerText);
-                    let count = 0;
-                    const duration = 2000; // ms
-                    const increment = Math.ceil(target / (duration / 30)); // Update every 30ms
-
-                    const timer = setInterval(() => {
-                        count += increment;
-                        if (count >= target) {
-                            counter.innerText = target;
-                            clearInterval(timer);
-                        } else {
-                            counter.innerText = count;
-                        }
-                    }, 30);
+            // Format date and time
+            let dateTimeText = 'Date & Time';
+            if (date) {
+                const dateObj = new Date(date);
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
                 });
+                dateTimeText = formatter.format(dateObj);
+                if (time) {
+                    dateTimeText += ' at ' + time;
+                }
+            }
+
+            // Update preview elements
+            document.querySelector('.event-preview-title').textContent = title;
+            document.querySelector('.event-preview-date').textContent = dateTimeText;
+            document.querySelector('.event-preview-location').textContent = location;
+            document.querySelector('.event-preview-description').textContent = description;
+            document.querySelector('.event-preview-capacity').textContent = capacity;
+
+            // Update type badge
+            const typeBadge = document.querySelector('.event-preview-type');
+            if (type === 'Workshop') {
+                typeBadge.className = 'badge event-preview-type bg-warning';
+            } else if (type === 'Conference') {
+                typeBadge.className = 'badge event-preview-type bg-info';
+            } else if (type === 'Seminar') {
+                typeBadge.className = 'badge event-preview-type bg-primary';
+            } else if (type === 'Meeting') {
+                typeBadge.className = 'badge event-preview-type bg-success';
+            } else if (type === 'Exhibition') {
+                typeBadge.className = 'badge event-preview-type bg-secondary';
+            } else {
+                typeBadge.className = 'badge event-preview-type bg-dark';
+            }
+            typeBadge.textContent = type === 'Select event type' ? 'Type' : type;
+        }
+
+        // Create confetti animation for success message
+        function createConfetti() {
+            const colors = ['#C1053F', '#e3336d', '#9a0433', '#42a5f5', '#4caf50', '#ff9800'];
+            const container = document.body;
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.opacity = Math.random() * 0.5 + 0.5;
+                container.appendChild(confetti);
+
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Counter animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter-animation');
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.innerText);
+                let count = 0;
+                const duration = 2000; // ms
+                const increment = Math.ceil(target / (duration / 30)); // Update every 30ms
+
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        counter.innerText = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = count;
+                    }
+                }, 30);
             });
-        </script>
+        });
+    </script>
 </body>
 
 </html>

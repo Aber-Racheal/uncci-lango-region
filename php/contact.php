@@ -35,9 +35,5 @@ if ($stmt = $conn->prepare($sql)){
 }else{
     echo "Error: " . $conn->error;
 }
-
-
 $conn->close();
-
-
 ?>
