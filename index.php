@@ -1,6 +1,16 @@
 <?php
 require_once 'php/db_con.php'; // Include the database connection
 
+// Define the events query string
+$events_sql = "SELECT * FROM events ORDER BY event_date DESC";
+
+// Execute the query
+$events_result = $conn->query($events_sql);
+
+if (!$events_result) {
+  die("Query failed: " . $conn->error);
+}
+
 // Fetch posts from the database
 $sql = "SELECT * FROM updates ORDER BY created_at DESC";
 $result = $conn->query($sql);
@@ -20,8 +30,9 @@ $total_posts = $row_count['total']; // Total posts
 $total_pages = ceil($total_posts / $limit);
 
 // Fetch posts for the current page
-$sql = "SELECT * FROM updates ORDER BY created_at DESC LIMIT $start, $limit";
-$result = $conn->query($sql);
+$updates_sql = "SELECT * FROM updates ORDER BY created_at DESC LIMIT $start, $limit";
+$updates_result = $conn->query($updates_sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +87,361 @@ $result = $conn->query($sql);
       height: 40px;
       width: auto;
       border-radius: 10px;
+    }
+
+    /* Events Section Styles */
+    :root {
+      --primary-color: #C1053F;
+      --primary-light: rgba(193, 5, 63, 0.1);
+      --primary-dark: #9a0435;
+      --gradient-primary: linear-gradient(135deg, #C1053F, #e91e63);
+      --shadow-primary: 0 10px 30px rgba(193, 5, 63, 0.15);
+      --shadow-hover: 0 20px 40px rgba(193, 5, 63, 0.25);
+    }
+
+    .events-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .events-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(193, 5, 63, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(233, 30, 99, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+      position: relative;
+    }
+
+    .section-header h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      font-size: 1.2rem;
+      color: #6c757d;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .event-card {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-primary);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid rgba(193, 5, 63, 0.1);
+      position: relative;
+      height: 100%;
+      margin-bottom: 30px;
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      z-index: 2;
+    }
+
+    .event-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-color);
+    }
+
+    .event-image {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .event-image .post-img {
+      height: 100%;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .event-card:hover .event-image img {
+      transform: scale(1.05);
+    }
+
+    .event-date-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(193, 5, 63, 0.3);
+      z-index: 3;
+      backdrop-filter: blur(10px);
+    }
+
+    .event-date-badge strong {
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+    }
+
+    .event-date-badge small {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .event-type-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 3;
+    }
+
+    .event-type-badge .badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.75rem;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Event Type Badge Colors */
+    .event-type-badge .bg-warning {
+      background: linear-gradient(135deg, #ff9800, #ff5722) !important;
+    }
+
+    .event-type-badge .bg-info {
+      background: linear-gradient(135deg, #2196f3, #03a9f4) !important;
+    }
+
+    .event-type-badge .bg-primary {
+      background: linear-gradient(135deg, #4caf50, #8bc34a) !important;
+    }
+
+    .event-content {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 250px);
+    }
+
+    .event-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      line-height: 1.3;
+    }
+
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .meta-item i {
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+
+    .event-description {
+      color: #6c757d;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .event-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid #f1f3f4;
+    }
+
+    .status-chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Status Chip Colors */
+    .status-chip.bg-success {
+      background: linear-gradient(135deg, #4caf50, #8bc34a) !important;
+      color: white !important;
+    }
+
+    .status-chip.bg-secondary {
+      background: linear-gradient(135deg, #757575, #9e9e9e) !important;
+      color: white !important;
+    }
+
+    .readmore {
+      background: var(--gradient-primary) !important;
+      color: white !important;
+      border: none !important;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .readmore:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(193, 5, 63, 0.3);
+      color: white !important;
+    }
+
+    .readmore.stretched-link::after {
+      position: static;
+    }
+
+    /* No Events State */
+    .no-events-state {
+      text-align: center;
+      padding: 80px 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--shadow-primary);
+    }
+
+    .no-events-state i {
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .no-events-state h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .no-events-state p {
+      color: #6c757d;
+      font-size: 1.1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .events-section {
+        padding: 60px 0;
+      }
+
+      .section-header h2 {
+        font-size: 2.5rem;
+      }
+
+      .section-header {
+        margin-bottom: 50px;
+      }
+
+      .event-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .event-footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+      }
+
+      .event-date-badge {
+        top: 15px;
+        left: 15px;
+        padding: 10px 15px;
+      }
+
+      .event-date-badge strong {
+        font-size: 1.5rem;
+      }
+
+      .event-card {
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Animation for dynamic loading */
+    .event-card {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -372,6 +738,99 @@ $result = $conn->query($sql);
         </div>
       </div>
     </section>
+
+
+    <section class="events-section" id="events-section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Events</h2>
+            <p>
+         Stay informed about our upcoming and past events. From conferences and workshops to community gatherings and special occasions, explore how we connect, celebrate, and make an impact together.
+            </p>
+          </div>
+
+          <div class="row gy-4">
+            <?php
+            if (isset($events_result) && $events_result->num_rows > 0):
+              while ($row = $events_result->fetch_assoc()):
+                $event_date = new DateTime($row['event_date']);
+                $day = $event_date->format('d');
+                $month_year = $event_date->format('M Y');
+                $is_past = $event_date < new DateTime();
+                $status_class = $is_past ? 'bg-secondary' : 'bg-success';
+                $status_text = $is_past ? 'Past' : 'Upcoming';
+                $status_icon = $is_past ? 'bi-calendar-x' : 'bi-calendar-check';
+                $event_type_class = $row['event_type'] == 'workshop' ? 'bg-warning' : ($row['event_type'] == 'conference' ? 'bg-info' : 'bg-primary');
+                $image_path = 'uploads/events/' . htmlspecialchars($row['image']);
+            ?>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                  <article class="event-card">
+                    <div class="event-image">
+                      <div class="post-img position-relative overflow-hidden">
+                        <img src="<?php echo $image_path; ?>" class="img-fluid" alt="Event Image">
+                        <div class="event-date-badge">
+                          <strong><?php echo $day; ?></strong>
+                          <small><?php echo $month_year; ?></small>
+                        </div>
+                        <div class="event-type-badge">
+                          <span class="badge <?php echo $event_type_class; ?> text-white">
+                            <?php echo ucfirst($row['event_type']); ?>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="event-content">
+                      <h3 class="event-title"><?php echo htmlspecialchars($row['event_name']); ?></h3>
+
+                      <div class="event-meta">
+                        <div class="meta-item">
+                          <i class="bi bi-geo-alt"></i>
+                          <span><?php echo htmlspecialchars($row['location']); ?></span>
+                        </div>
+                        <div class="meta-item">
+                          <i class="bi bi-clock"></i>
+                          <span><?php echo htmlspecialchars($row['event_time']); ?></span>
+                        </div>
+                      </div>
+
+                      <p class="event-description">
+                        <?php echo htmlspecialchars(substr($row['event_description'], 0, 100)); ?>...
+                      </p>
+
+                      <div class="event-footer">
+                        <span class="status-chip <?php echo $status_class; ?> text-white">
+                          <i class="bi <?php echo $status_icon; ?>"></i>
+                          <?php echo $status_text; ?>
+                        </span>
+                        <a href="event-details.php?id=<?php echo urlencode($row['event_id']); ?>" class="readmore">
+                          <span>Read More</span>
+                          <i class="bi bi-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              <?php
+              endwhile;
+            else:
+              ?>
+              <div class="col-12">
+                <div class="no-events-state">
+                  <i class="bi bi-calendar-event"></i>
+                  <h3>No Events Available</h3>
+                  <p>Check back soon for exciting upcoming events and activities!</p>
+                </div>
+              </div>
+            <?php endif; ?>
+          </div>
+
+        </div>
+    </section>
+
+
+
 
 
     <!-- Clients Section -->
