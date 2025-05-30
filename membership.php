@@ -30,48 +30,7 @@
 
 <body class="pricing-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container position-relative d-flex align-items-center">
-
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/img/UNCCI-logo.png" alt="" />
-        <h1 class="sitename">Lango Region</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.php">Home</a></li>
-          <li class="dropdown">
-            <a href="about.php"
-              ><span>About</span>
-              <i class="bi bi-chevron-down toggle-dropdown"></i
-            ></a>
-            <ul>
-              <li><a href="about.php #who-we-are">Who We Are</a></li>
-              <li><a href="about.php #team">Board of Directors</a></li>
-              <li class="dropdown">
-                <a href="about.php #clients"
-                  ><span>Our Partners</span>
-              </a>
-              </li>
-            </ul>
-          </li>
-          <li><a href="services.html #features">Districts</a></li>
-          <li><a href="services.html">Services</a></li>
-          <!-- <li><a href="portfolio.html">Portfolio</a></li> -->
-          <li><a href="membership.php" class="active">Membership</a></li>
-          <li><a href="new&media.php">News&Media</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <a href="membership.php" class="join-now-nav">JOIN NOW</a>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-   
-
-    </div>
-  </header>
+ <?php include 'includes/global-header.php'; ?>
 
   <main class="main">
 
@@ -108,7 +67,7 @@
                 <li><i class="bi bi-check"></i> <span>Exclusive Events</span></li>
                 <li><i class="bi bi-check"></i> <span>Special Discounts</span></li>
                 <li><i class="bi bi-check"></i> <span>Business Visibility</span></li>
-                
+
                 <li class="na"><i class="bi bi-x"></i> <span>Business to Business networking</span></li>
                 <li class="na"><i class="bi bi-x"></i> <span>Trade Mission participation</span></li>
                 <li class="na"><i class="bi bi-x"></i> <span>Training for high-value business and supply chain</span></li>
@@ -135,7 +94,7 @@
                 <li><i class="bi bi-check"></i> <span>Policy advocacy activities</span></li>
                 <li><i class="bi bi-check"></i> <span>Point of reference in case of securing finance</span></li>
                 <li><i class="bi bi-check"></i> <span>Free publications in The Chamber Magazines, Newsletters</span></li>
-                <li><i class="bi bi-check"></i> <span>	Free website advertising</span></li>
+                <li><i class="bi bi-check"></i> <span> Free website advertising</span></li>
                 <li class="na"><i class="bi bi-x"></i> <span>Reduced cost of advertising in the Chamber publications</span></li>
               </ul>
             </div>
@@ -171,96 +130,7 @@
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.php" class="logo d-flex align-items-center">
-            <img src="assets/img/UNCCI-logo.png" alt="UNCCI logo" />
-            <span class="sitename">UNCCI - Lango Region</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>Plot 25 Obote Avenue, Lira City.</p>
-            <!-- <p>New York, NY 535022</p> -->
-            <p class="mt-3">
-              <strong>Phone:</strong> <span>+256 774016223</span>
-            </p>
-            <p>
-              <strong>Email:</strong>
-              <span>lirachamberofcommerce@gmail.com</span>
-            </p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-             <li><a href="index.php">Home</a></li>
-             <li><a href="about.php">About</a></li>
-             <li><a href="services.html #features">Districts</a></li>
-            <li><a href="services.html">Services</a></li>
-            
-            <li><a href="new&media.php">News & Media</a></li>
-     
-          
-            <!-- <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li> -->
-          </ul>
-        </div>
-        <div class="col-lg-4 col-md-12 footer-newsletter">
-          <p>
-            Becoming a member of the UNCCI - Lango region means connecting
-            with a dynamic network of business leaders and gaining access to
-            valuable resources, events, and opportunities. Take the next step
-            in growing your business and contributing to the region’s economic
-            development. Join us today!
-          </p>
-         
-        </div>
-
-        <a  href="membership.php" class="join-now">JOIN NOW</a>
-        <!-- <div class="col-lg-4 col-md-12 footer-newsletter">
-          <h4>Our Newsletter</h4>
-          <p>
-            Subscribe to our newsletter and receive the latest news about our
-            products and services!
-          </p>
-          <form
-            action="forms/newsletter.php"
-            method="post"
-            class="php-email-form"
-          >
-            <div class="newsletter-form">
-              <input type="email" name="email" /><input
-                type="submit"
-                value="Subscribe"
-              />
-            </div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">
-              Your subscription request has been sent. Thank you!
-            </div>
-          </form>
-        </div> -->
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>
-        © <span>Copyright</span>
-        <strong class="px-1 sitename">UNCCI - Lango Region</strong>
-        <span>All Rights Reserved</span>
-      </p>
-     
-    </div>
-  </footer>
+ <?php include 'includes/global-footer.php'; ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

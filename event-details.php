@@ -85,654 +85,23 @@ $conn->close();
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
-    <style>
-        /* Event Details Page Styles */
 
-        .join-now {
-            background-color: #c1053f;
-            color: white;
-            height: 20px;
-            width: auto;
-            border-radius: 5px;
-        }
-
-        .join-now-nav {
-            background-color: #c1053f;
-            padding: 10px;
-            color: white;
-            height: 40px;
-            width: auto;
-            border-radius: 10px;
-        }
-
-        :root {
-            --primary-color: #C1053F;
-            --primary-dark: #9A0432;
-            --primary-light: #E91E63;
-            --secondary-color: #2C3E50;
-            --accent-color: #3498DB;
-            --light-gray: #F8F9FA;
-            --medium-gray: #E9ECEF;
-            --dark-gray: #6C757D;
-            --text-dark: #2C3E50;
-            --text-light: #7F8C8D;
-            --success: #28A745;
-            --warning: #FFC107;
-            --info: #17A2B8;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
-        }
-
-        /* Global Styles */
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-        }
-
-        /* Back Button */
-        .btn-outline-primary {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Event Image Container */
-        .event-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            background: white;
-            padding: 8px;
-        }
-
-        .event-image-container img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: calc(var(--border-radius) - 4px);
-            transition: var(--transition);
-        }
-
-        .event-image-container:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Event Title */
-        .event-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-
-        /* Event Meta Information */
-        .event-meta {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--medium-gray);
-            transition: var(--transition);
-        }
-
-        .meta-item:last-child {
-            border-bottom: none;
-        }
-
-        .meta-item:hover {
-            background-color: rgba(193, 5, 63, 0.02);
-            padding-left: 8px;
-            border-radius: 8px;
-        }
-
-        .meta-item i {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .meta-item strong {
-            color: var(--text-dark);
-            font-weight: 600;
-            min-width: 80px;
-        }
-
-        /* Badges */
-        .badge {
-            padding: 8px 16px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge.bg-primary {
-            background-color: var(--primary-color) !important;
-            color: white;
-        }
-
-        .badge.bg-secondary {
-            background-color: var(--secondary-color) !important;
-            color: white;
-        }
-
-        .badge.bg-success {
-            background-color: var(--success) !important;
-            color: white;
-        }
-
-        .badge.bg-warning {
-            background-color: var(--warning) !important;
-            color: var(--text-dark);
-        }
-
-        .badge.bg-info {
-            background-color: var(--info) !important;
-            color: white;
-        }
-
-        /* Event Subtitle */
-        .event-subtitle h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--secondary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        /* Event Description */
-        .event-description,
-        .additional-description {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-
-        .event-description h3,
-        .additional-description h3 {
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .event-description h3::before,
-        .additional-description h3::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 24px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 2px;
-        }
-
-        .description-content {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* Sidebar */
-        .event-sidebar {
-            position: sticky;
-            top: 2rem;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            background: white;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-bottom: none;
-            padding: 1.25rem 1.5rem;
-        }
-
-        .card-header h5 {
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        /* Quick Info Date Display */
-        .date-display {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-        }
-
-        .day-number {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .month-year {
-            font-size: 1.1rem;
-            font-weight: 500;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Quick Info List */
-        .card-body ul li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .card-body ul li i {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Status Indicator */
-        .status-indicator {
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-
-        .status-indicator.bg-success {
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
-            color: var(--success);
-        }
-
-        .status-indicator.bg-warning {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
-            color: #e69500;
-        }
-
-        .status-indicator.bg-secondary {
-            background: linear-gradient(135deg, rgba(108, 117, 125, 0.1), rgba(108, 117, 125, 0.05));
-            color: var(--dark-gray);
-        }
-
-        .status-indicator i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .status-indicator h6 {
-            font-weight: 700;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 12px 24px;
-            font-weight: 600;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), #7a0329);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success), #1e7e34);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #1e7e34, #155724);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, var(--info), #138496);
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: linear-gradient(135deg, #138496, #0c5460);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-outline-secondary {
-            border: 2px solid var(--medium-gray);
-            color: var(--text-dark);
-            background: white;
-        }
-
-        .btn-outline-secondary:hover {
-            background: var(--secondary-color);
-            border-color: var(--secondary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.875rem;
-        }
-
-        /* Action Buttons */
-        .event-actions {
-            padding: 2rem;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary-color);
-        }
-
-        /* Creation Info */
-        .card:last-child .card-body {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: var(--text-light);
-            text-align: center;
-        }
-
-        .card:last-child .card-body i {
-            color: var(--primary-color);
-            margin-right: 8px;
-        }
-
-        /* Scroll Top Button */
-        #scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        #scroll-top:hover {
-            background: linear-gradient(135deg, var(--primary-dark), #7a0329);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-            color: white;
-        }
-
-        #scroll-top.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .event-sidebar {
-                position: static;
-                margin-top: 2rem;
-            }
-
-            .event-title {
-                font-size: 2rem;
-            }
-
-            .event-image-container img {
-                height: 300px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .event-meta {
-                padding: 1.5rem;
-            }
-
-            .event-description,
-            .additional-description {
-                padding: 1.5rem;
-            }
-
-            .card-body {
-                padding: 1.25rem;
-            }
-
-            .day-number {
-                font-size: 2.5rem;
-            }
-
-            .event-title {
-                font-size: 1.75rem;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .event-actions {
-                padding: 1.5rem;
-            }
-
-            .event-actions .btn {
-                display: block;
-                margin: 0.5rem 0;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .meta-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-                text-align: left;
-            }
-
-            .meta-item strong {
-                min-width: auto;
-            }
-
-            .event-image-container img {
-                height: 250px;
-            }
-
-            .date-display {
-                padding: 1rem;
-            }
-
-            .day-number {
-                font-size: 2rem;
-            }
-
-            .month-year {
-                font-size: 1rem;
-            }
-        }
-
-        /* Animation Effects */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .event-title,
-        .event-meta,
-        .event-description,
-        .additional-description,
-        .card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .event-meta {
-            animation-delay: 0.1s;
-        }
-
-        .event-description {
-            animation-delay: 0.2s;
-        }
-
-        .additional-description {
-            animation-delay: 0.3s;
-        }
-
-        .card:nth-child(1) {
-            animation-delay: 0.4s;
-        }
-
-        .card:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .card:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-
-        /* Hover Effects */
-        .meta-item,
-        .card-body ul li {
-            transition: var(--transition);
-        }
-
-        .card-body ul li:hover {
-            background-color: rgba(193, 5, 63, 0.05);
-            padding-left: 8px;
-            border-radius: 6px;
-        }
-
-        /* Loading States */
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* Focus States for Accessibility */
-        .btn:focus,
-        .btn-outline-primary:focus,
-        .btn-outline-secondary:focus {
-            outline: 2px solid var(--primary-color);
-            outline-offset: 2px;
-        }
-
-        /* Print Styles */
-        @media print {
-
-            .btn,
-            #scroll-top,
-            .event-actions {
-                display: none !important;
-            }
-
-            .card {
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
-
-            .event-image-container {
-                box-shadow: none;
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <!-- Add your header/navigation here if you have one -->
-
+   <?php include 'includes/global-header.php'; ?>
     <main>
+        <div class="page-title accent-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h1 class="mb-2 mb-lg-0">News & Media</h1>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="index.php">Home</a></li>
+                        <li class="current">News & Media</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
         <div class="container mt-5">
             <!-- Back button -->
             <div class="mb-4">
@@ -902,6 +271,40 @@ $conn->close();
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                            <i class="bi bi-printer"></i> Print Article
+                        </button>
+                        <button class="btn btn-outline-success btn-sm" onclick="copyLink()">
+                            <i class="bi bi-link-45deg"></i> Copy Link
+                        </button>
+                        <a href="new&media.php" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left"></i> Back to News
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="news-actions text-center">
+                        <a href="new&media.php" class="btn btn-outline-secondary me-2">
+                            <i class="bi bi-arrow-left"></i> Back to News & Media
+                        </a>
+                        <button class="btn btn-primary me-2" onclick="window.print()">
+                            <i class="bi bi-printer"></i> Print Article
+                        </button>
+                        <button class="btn btn-success" onclick="shareOnWhatsApp()">
+                            <i class="bi bi-share"></i> Share Article
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Action Buttons -->
             <!-- <div class="row mt-5">
                 <div class="col-12">
@@ -923,70 +326,7 @@ $conn->close();
             </div> -->
         </div>
     </main>
-    <footer id="footer" class="footer dark-background">
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="index.php" class="logo d-flex align-items-center">
-                        <img src="assets/img/UNCCI-logo.png" alt="UNCCI logo" />
-                        <span class="sitename">UNCCI - Lango Region</span>
-                    </a>
-                    <div class="footer-contact pt-3">
-                        <p>Plot 25 Obote Avenue, Lira City.</p>
-                        <!-- <p>New York, NY 535022</p> -->
-                        <p class="mt-3">
-                            <strong>Phone:</strong> <span>+256 774016223</span>
-                        </p>
-                        <p>
-                            <strong>Email:</strong>
-                            <span>lirachamberofcommerce@gmail.com</span>
-                        </p>
-                    </div>
-                    <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="about.php">About</a></li>
-                        <li><a href="services.html #features">Districts</a></li>
-                        <li><a href="services.html">Services</a></li>
-
-                        <li><a href="new&media.php">News & Media</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-12 footer-newsletter">
-                    <p>
-                        Becoming a member of the UNCCI - Lango region means connecting
-                        with a dynamic network of business leaders and gaining access to
-                        valuable resources, events, and opportunities. Take the next step
-                        in growing your business and contributing to the region’s economic
-                        development. Join us today!
-                    </p>
-
-                </div>
-
-                <a href="membership.php" class="join-now">JOIN NOW</a>
-
-            </div>
-        </div>
-
-        <div class="container copyright text-center mt-4">
-            <p>
-                © <span>Copyright</span>
-                <strong class="px-1 sitename">UNCCI - Lango Region</strong>
-                <span>All Rights Reserved</span>
-            </p>
-
-        </div>
-    </footer>
+     <?php include 'includes/global-footer.php'; ?>
     <!-- Add your footer here if you have one -->
 
     <!-- Bootstrap JS -->
@@ -1012,6 +352,46 @@ $conn->close();
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script>
+        // Get current page URL and article title for sharing
+        const currentUrl = window.location.href;
+        const articleTitle = "<?php echo addslashes($news['title']); ?>";
+
+        function shareOnFacebook() {
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnTwitter() {
+            const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(articleTitle)}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnWhatsApp() {
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(articleTitle + ' ' + currentUrl)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(currentUrl).then(function() {
+                alert('Link copied to clipboard!');
+            }, function(err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = currentUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Link copied to clipboard!');
+            });
+        }
+
+        // Print function
+        function printArticle() {
+            window.print();
+        }
+    </script>
 </body>
 
 </html>
